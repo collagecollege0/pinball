@@ -5,6 +5,9 @@ public class BrightnessRegulator : MonoBehaviour {
 	// Materialを入れる
 	Material myMaterial;
 
+	//得点用の関数宣言
+	int addScore = 0;
+
 	// Emissionの最小値
 	private float minEmission = 0.3f;
 	// Emissionの強度
@@ -19,13 +22,22 @@ public class BrightnessRegulator : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+	
+		GameObject.Find("score");
+
 		// タグによって光らせる色を変える
 		if (tag == "SmallStarTag") {
 			this.defaultColor = Color.white;
-		} else if (tag == "LargeStarTag") {
+			addScore = 10;
+		}else if (tag == "LargeStarTag") {
 			this.defaultColor = Color.yellow;
-		}else if(tag == "SmallCloudTag" || tag == "LargeCloudTag") {
+			addScore = 20;
+		}else if(tag == "SmallCloudTag") {
 			this.defaultColor = Color.blue;
+			addScore = 30;
+		}else if(tag == "LargeCloudTag") {
+			this.defaultColor = Color.blue;
+			addScore = 40;
 		}
 
 		//オブジェクトにアタッチしているMaterialを取得
@@ -54,5 +66,6 @@ public class BrightnessRegulator : MonoBehaviour {
 	void OnCollisionEnter(Collision other) {
 		//角度を180に設定
 		this.degree = 180;
+		GameObject.Find("score").GetComponent<ScoreText>().score += addScore;
 	}
 }
